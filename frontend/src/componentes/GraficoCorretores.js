@@ -4,7 +4,7 @@
 
   const maxWidth = 800;
 
-  const GraficoCorretores = ({ preparedData, cores, currentPage }) => {
+  const GraficoCorretores = ({ preparedData, cores, coresTotal, currentPage }) => {
     const ref = useRef();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -22,7 +22,7 @@
       const itemsPerPage = 10;
       const topCorretor = preparedData ? d3.max(preparedData, d => Number(d.valor_contrato)) : null;
 
-      const margin = { top: 20, right: 20, bottom: 30, left: 175 };
+      const margin = { top: 20, right: 20, bottom: 30, left: 300 };
       const effectiveWidth = Math.min(windowWidth, maxWidth) - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
 
@@ -69,11 +69,12 @@
     .attr("fill", d => {
       const correspondingData = currentPageData.find(item => item.corretor === d);
       if (correspondingData) {
-        return Number(correspondingData.valor_contrato) === topCorretor ? cores["Principal"] : cores["Secundária"];
+        return Number(correspondingData.valor_contrato) === topCorretor ? coresTotal["Principal"] : coresTotal["Secundária"];
       }
       return "black"; // Cor padrão se não encontrar o dado correspondente
-    });
-  }, [preparedData, cores, currentPage, windowWidth]);
+    })
+    .style("font-size", "14px");
+  }, [preparedData, cores, coresTotal, currentPage, windowWidth]);
 
 
     return (

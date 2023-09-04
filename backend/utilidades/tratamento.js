@@ -5,8 +5,6 @@ const process_data = (data) => {
     for (const [key, value] of Object.entries(data)) {
       const reserva = key;
       const corretor = value.corretor.corretor;
-      if (corretor === 'Evandro Rodrigues da Silva') continue;
-  
       const corretor_id = value.corretor.idcorretor_cv;
       const empreendimento = value.unidade.empreendimento;
       const imobiliaria = value.corretor.imobiliaria;
@@ -38,7 +36,7 @@ const process_data = (data) => {
   };
   
   // Diminui o nome para um comprimento máximo, abreviando os nomes do meio
-  const diminuir_nome = (nome, max_length = 30) => {
+  const diminuir_nome = (nome, max_length = 35) => {
     if (nome.length <= max_length) return nome;
   
     const parts = nome.split(' ');

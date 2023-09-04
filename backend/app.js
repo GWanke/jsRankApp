@@ -6,7 +6,6 @@ const PORT = 3001;
 // Importando as funções do tratamento.js
 const { 
   process_data,  
-  filter_by_empreendimento,
   prepare_data 
 } = require('./utilidades/tratamento');
 
