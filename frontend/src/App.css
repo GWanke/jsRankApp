@@ -1,100 +1,149 @@
-/* Estilos gerais */
+/* Reset básico para garantir consistência entre navegadores */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos Base (Mobile-First) */
 .App {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh; /* Garante que o conteúdo ocupe toda a altura da janela */
+  min-height: 100vh;
   text-align: center;
   font-family: 'Prompt-Regular';
-  background-color: #f4f4f4; /* Um fundo claro para contraste */
-  padding: 20px; /* Espaçamento ao redor do conteúdo */
-  background-image: url('../src/imagens/white-background.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #f4f4f4;
+  padding: 5vw;
+  background-image: 
+    url('/src/imagens/be-monocromia-cinza.png'),
+    linear-gradient(to right, #007c83 0%, #007c83 15%, #f4f4f4 2%, #f4f4f4 100%);
+  background-position: left top, left top;
+  background-size: 14% auto, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
+  width: 100%;
+  margin: 0 auto; /* para centralizar o app horizontalmente */
 }
 
-/* Estilos para o título principal */
 .app-titulo {
-  font-size: calc(15px + 4vmin);
-  color: #333; /* Cor escura para o título */
-  margin-bottom: 20px; /* Espaçamento abaixo do título */
+  font-size: calc(3vw + 2vh);
+  color: #333;
+  margin-top: 4vh;
+  margin-bottom: 4vw;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  max-width: 80%; /* Define uma largura máxima */
+  margin-left: auto; /* Centraliza o container horizontalmente */
+  margin-right: auto; /* Centraliza o container horizontalmente */
 }
 
-/* Estilos para a mensagem de status e erro */
-.mensagem-status, .mensagem-erro {
-  font-size: 24px; /* Tamanho da fonte */
-  color: #666; /* Cor escura para a mensagem */
-  margin: 10px 0; /* Espaçamento acima e abaixo da mensagem */
+
+.best-seller-section,
+.corretores-section,
+.metas-section {
+  margin: 2vh 0; /* 2vh de margem vertical no topo e na base */
 }
 
-/* Estilos para a mensagem de Best Seller */
-.best-seller-container {
-  margin: 20px 0; /* Espaçamento acima e abaixo do container */
+.app-titulo,
+.section-title {
+  margin: 2vh 0; /* 2vh de margem vertical no topo e na base */
 }
 
-.best-seller-container h2 {
+.best-seller-container{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 32px; /* Tamanho da fonte para o h2 */
-  color: #444; /* Cor escura para o h2 */
+  text-align: center;
+  flex-wrap: wrap; /* Permite que os itens sejam quebrados em várias linhas se necessário */
+  font-size: calc(1.75vw + 1vh);
+  color: #444;
+  margin-top: 2vh;
+  
 }
 
 .best-seller-be {
-  color: #9c9fae; /* Cor secundária */
-  margin-right: 10px; /* Espaçamento à direita */
+  color: #9c9fae;
+  margin-left: 0.3em;
 }
 
 .best-seller-name {
-  color: #007c83; /* Cor principal */
-  margin-left: 10px; /* Espaçamento à esquerda */
+  color: #007c83;
+  margin-left: 0.3em;
 }
 
-/* Estilos para os containers de gráficos */
-.chart-container, .chart-metas-container {
-  width: 100%; /* Ocupa toda a largura disponível */
-  max-width: 1200px; /* Largura máxima para os gráficos */
-  margin: 20px 0; /* Espaçamento acima e abaixo dos containers */
+.chart-container {
+  width: 95vw; /* ocupa 90% da largura da viewport */
+  margin: 20px auto; /* adiciona margem e centraliza horizontalmente */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Estilos para a animação do logo (caso você queira usar no futuro) */
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.chart-metas-container {
+  width: 85vw; /* ocupa 85% da largura da viewport */
+  display: flex;
+  margin: 2vh auto; /* adiciona margem e centraliza horizontalmente */
+  flex-direction: column; /* alinha os itens na vertical */
+  justify-content: center;
+  align-items: center;
+  color: #007c83;
+}
+
+.chart-metas-container p {
+  margin: 1vh 0; /* adiciona uma margem vertical entre as frases */
+  font-size: calc(1.25vw + 1vh); /* ajusta o tamanho da fonte */
+  margin-left: 10vw;
+  text-align: center; /* centraliza o texto */
+}
+
+
+/* Ajustes para o eixo Y no componente */
+
+.y-axis .tick text {
+  font-size: calc(0.95vw + 1vh);
+  font-family: 'Prompt-Regular';
+}
+
+
+/* Ajustes para Telas Médias */
+@media (min-width: 480px) {
+
+  .App {
+    padding: 1.5vw;
+  }
+
+  .app-titulo {
+    font-size: calc(5vw + 3vh);
+  }
+
+  .best-seller-container h2 {
+    font-size: 3.5vw;
+  }
+  .chart-container {
+    width: 80vw; /* ocupa 80% da largura da viewport em telas médias */
+  }
+  .y-axis .tick text {
+    font-size: calc(1.15vw + 1vh)
   }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Ajustes para Telas Grandes */
+@media (min-width: 768px) {
+  .App {
+    padding: 2vw;
   }
-  to {
-    transform: rotate(360deg);
+
+  .app-titulo {
+    font-size: calc(3vw + 2vh);
   }
-}
 
-.mensagem-erro {
-  color:red;
-  font-weight: bold;
-  margin-top: 15px;
-}
 
-/* Adicione isso ao seu arquivo CSS */
-.mensagem-status {
-font-size: 2em;  /* Tamanho da fonte grande */
-text-align: center;  /* Alinhamento de texto centralizado */
-position: fixed;  /* Posição fixa */
-top: 50%;  /* Centralizar verticalmente */
-left: 50%;  /* Centralizar horizontalmente */
-transform: translate(-50%, -50%);  /* Necessário para verdadeira centralização */
-background-color: rgba(0, 0, 0, 0.8);  /* Fundo semi-transparente */
-color: white;  /* Cor do texto */
-padding: 20px;  /* Espaçamento interno */
-border-radius: 8px;  /* Cantos arredondados */
+  .best-seller-container h2 {
+    font-size: 4vw;
+  }
+  .chart-container {
+    width: 70vw; /* ocupa 70% da largura da viewport em telas grandes */
+  }
+  .y-axis .tick text {
+    font-size: calc(1vw + 0.95vh)
+  }
 }
 

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import GraficoCorretores from './componentes/GraficoCorretores';
-import GraficoMetas from './componentes/GraficoMetas';
 import './index.css';
-import './componentes/GraficoCorretores.css';
 import './App.css';
 import axios from 'axios';
 
@@ -14,6 +12,12 @@ function App() {
   const [status, setStatus] = useState('Comunicando com a API...');
   const [currentRanking, setCurrentRanking] = useState(null);
   const [bestSeller, setBestSeller] = useState("");
+  const [showRanking, setShowRanking] = useState(false);
+
+
+  const totalValue = currentRanking ? currentRanking.reduce((acc, item) => acc + item.valor_contrato, 0) : 0;
+  const percentage30M = ((totalValue / 30000000) * 100).toFixed(2);
+  const percentage60M = ((totalValue / 60000000) * 100).toFixed(2);
 
   useEffect(() => {
     axios.get('http://localhost:3001/api/fetchData')
@@ -32,43 +36,47 @@ function App() {
 
   useEffect(() => {
     if (preparedData) {
+      console.log(preparedData.slice(0,10))
       const filteredData = preparedData.filter(d => d.corretor !== 'Evandro Rodrigues Da Silva' && d.corretor !== 'Lais Saraiva');
       setCurrentRanking(filteredData);
       setBestSeller(filteredData[0].corretor);
+      setShowRanking(true);
     }
   }, [preparedData]);
 
   return (
     <div className="App">
       <h1 className="app-titulo">Best Seller</h1>
+      
       {!preparedData && <div className="mensagem-status">{status}</div>}
-    
-      <div className="best-seller-container">
-        <h2>
-          <span className="best-seller-be" style={{ color: cores["Secundária"] }}>BE</span>
-          <span>st Seller atual é </span>
-          <span className="best-seller-name" style={{ color: cores["Principal"] }}>
-            {bestSeller}
-          </span>
-        </h2>
-      </div>
       
-      <div className="chart-container">
-        {currentRanking && currentRanking.length > 0 ? (
-          <GraficoCorretores 
-            preparedData={currentRanking.slice(0, 10)} 
-            cores={cores} 
-          />
-        ) : (
-          <div className="mensagem-erro">
-            Não há vendas registradas.
-          </div>
-        )}
-      </div>
-      
-      <div className="chart-metas-container">
-        {currentRanking && <GraficoMetas total={currentRanking.reduce((acc, item) => acc + item.valor_contrato, 0)} />}
-      </div>
+      {showRanking && (
+        <>
+          <section className="best-seller-section">
+            <div className="best-seller-container">
+              O <span className="best-seller-be">BE</span>st Seller atual é <span className="best-seller-name">{bestSeller}</span>!
+            </div>  
+          </section>
+  
+          <section className="corretores-section">
+            <h2 className="section-title">Ranking de Corretores</h2>
+            <div className="chart-container">
+              <GraficoCorretores 
+                preparedData={currentRanking.slice(0, 10)} 
+                cores={cores} 
+              />
+            </div>
+          </section>
+  
+          <section className="metas-section">
+            <h2 className="section-title">Metas Alcançadas</h2>
+            <div className="chart-metas-container">
+              <p >Estamos em {percentage30M}% em relação à métrica de 30 milhões.</p>
+              <p >Estamos em {percentage60M}% em relação à métrica de 60 milhões.</p>
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 }

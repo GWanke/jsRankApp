@@ -1,8 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import './GraficoCorretores.css';
 
 const maxWidth = 800;
+
+const calculateMargins = (windowWidth) => {
+  if (windowWidth <= 480) { // Dispositivos móveis
+    return { top: 10, right: 5, bottom: 30, left: 250 };
+  } else if (windowWidth <= 768) { // Tablets
+    return { top: 15, right: 15, bottom: 20, left: 275 };
+  } else { // Desktop
+    return { top: 20, right: 20, bottom: 30, left: 500 };
+  }
+};
 
 const GraficoCorretores = ({ preparedData, cores }) => {
   const ref = useRef();
@@ -22,7 +31,7 @@ const GraficoCorretores = ({ preparedData, cores }) => {
     const filteredData = [...preparedData].reverse();
     const topCorretor = filteredData ? d3.max(filteredData, d => Number(d.valor_contrato)) : null;
 
-    const margin = { top: 20, right: 20, bottom: 30, left: 300 };
+    const margin = calculateMargins(windowWidth);
     const effectiveWidth = Math.min(windowWidth, maxWidth) - margin.left - margin.right;
     const height = 500 - margin.top - margin.bottom;
 
@@ -67,15 +76,11 @@ const GraficoCorretores = ({ preparedData, cores }) => {
         }
         return "black"; // Cor padrão se não encontrar o dado correspondente
       })
-      .style("font-size", "14px")
-      .style("font-family", "Prompt-Regular");
 
   }, [preparedData, cores, windowWidth]);
 
   return (
-    <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <svg ref={ref}></svg>
-    </div>
   );
 };
 
