@@ -9,11 +9,15 @@
   font-family: 'Prompt-Regular';
   background-color: #f4f4f4; /* Um fundo claro para contraste */
   padding: 20px; /* Espaçamento ao redor do conteúdo */
+  background-image: url('../src/imagens/white-background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Estilos para o título principal */
 .app-titulo {
-  font-size: calc(85px + 4vmin);
+  font-size: calc(15px + 4vmin);
   color: #333; /* Cor escura para o título */
   margin-bottom: 20px; /* Espaçamento abaixo do título */
 }
@@ -73,3 +77,24 @@
     transform: rotate(360deg);
   }
 }
+
+.mensagem-erro {
+  color:red;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* Adicione isso ao seu arquivo CSS */
+.mensagem-status {
+font-size: 2em;  /* Tamanho da fonte grande */
+text-align: center;  /* Alinhamento de texto centralizado */
+position: fixed;  /* Posição fixa */
+top: 50%;  /* Centralizar verticalmente */
+left: 50%;  /* Centralizar horizontalmente */
+transform: translate(-50%, -50%);  /* Necessário para verdadeira centralização */
+background-color: rgba(0, 0, 0, 0.8);  /* Fundo semi-transparente */
+color: white;  /* Cor do texto */
+padding: 20px;  /* Espaçamento interno */
+border-radius: 8px;  /* Cantos arredondados */
+}
+

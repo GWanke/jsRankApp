@@ -3,7 +3,7 @@ import GraficoCorretores from './componentes/GraficoCorretores';
 import GraficoMetas from './componentes/GraficoMetas';
 import './index.css';
 import './componentes/GraficoCorretores.css';
-import './componentes/App.css';
+import './App.css';
 import axios from 'axios';
 
 const cores = { "Principal": "#007c83", "Secundária": "#9c9fae" };
