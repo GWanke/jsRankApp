@@ -1,31 +1,68 @@
+/* Estilos gerais */
 .App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Garante que o conteúdo ocupe toda a altura da janela */
   text-align: center;
+  font-family: 'Prompt-Regular';
+  background-color: #f4f4f4; /* Um fundo claro para contraste */
+  padding: 20px; /* Espaçamento ao redor do conteúdo */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Estilos para o título principal */
+.app-titulo {
+  font-size: calc(85px + 4vmin);
+  color: #333; /* Cor escura para o título */
+  margin-bottom: 20px; /* Espaçamento abaixo do título */
 }
 
+/* Estilos para a mensagem de status e erro */
+.mensagem-status, .mensagem-erro {
+  font-size: 24px; /* Tamanho da fonte */
+  color: #666; /* Cor escura para a mensagem */
+  margin: 10px 0; /* Espaçamento acima e abaixo da mensagem */
+}
+
+/* Estilos para a mensagem de Best Seller */
+.best-seller-container {
+  margin: 20px 0; /* Espaçamento acima e abaixo do container */
+}
+
+.best-seller-container h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px; /* Tamanho da fonte para o h2 */
+  color: #444; /* Cor escura para o h2 */
+}
+
+.best-seller-be {
+  color: #9c9fae; /* Cor secundária */
+  margin-right: 10px; /* Espaçamento à direita */
+}
+
+.best-seller-name {
+  color: #007c83; /* Cor principal */
+  margin-left: 10px; /* Espaçamento à esquerda */
+}
+
+/* Estilos para os containers de gráficos */
+.chart-container, .chart-metas-container {
+  width: 100%; /* Ocupa toda a largura disponível */
+  max-width: 1200px; /* Largura máxima para os gráficos */
+  margin: 20px 0; /* Espaçamento acima e abaixo dos containers */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos para a animação do logo (caso você queira usar no futuro) */
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 @keyframes App-logo-spin {

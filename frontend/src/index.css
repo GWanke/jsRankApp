@@ -1,13 +1,16 @@
+/* Importação da Fonte */
+@font-face {
+  font-family: 'Prompt-Regular';
+  src: url('./assets/Prompt-Regular.ttf') format('truetype');
+}
+
+/* Aplicação da Fonte no Body */
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Prompt-Regular';
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Prompt-Regular';
 }

@@ -11,8 +11,6 @@ const {
 
 require('dotenv').config();
 
-let empreendimentoState = "TOTAL"; // Você pode armazenar isso em uma sessão ou em um banco de dados.
-
 //CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -20,11 +18,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-app.post('/setEmpreendimento', (req, res) => {
-  empreendimentoState = req.body.empreendimento; // Atualiza o estado
-  res.send({status: 'OK'});
-});
 
 app.get('/api/fetchData', async (req, res) => {
   const url = process.env.USER_URL; // Substitua por seu URL
@@ -38,7 +31,10 @@ app.get('/api/fetchData', async (req, res) => {
     if (response.status === 200) {
         // Processando os dados recebidos com Axios
         const processedData = process_data(response.data);
-        const preparedData = prepare_data(processedData)
+        // Filtragem por data_venda
+        const dataLimite = new Date("2023-01-01");
+        const data_filtrada = processedData.filter(row => row.data_venda > dataLimite);
+        const preparedData = prepare_data(data_filtrada)
                 res.json({ 
           data: preparedData 
         });

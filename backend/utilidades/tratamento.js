@@ -9,7 +9,6 @@ const process_data = (data) => {
       const empreendimento = value.unidade.empreendimento;
       const imobiliaria = value.corretor.imobiliaria;
       const valor_contrato = value.condicoes.valor_contrato;
-      const data_venda = value.data_venda;
   
       const row = {
         reserva,
@@ -18,11 +17,11 @@ const process_data = (data) => {
         id_corretor: corretor_id,
         imobiliaria,
         valor_contrato,
-        data_venda,
+        data_venda: new Date(value.data_venda)
       };
       rows.push(row);
     }
-    return rows;
+      return rows;
   };
   
   // Calcula o valor total de vendas no array fornecido
@@ -55,49 +54,25 @@ const processar_nome = (nome) => {
     return nomeReduzido;
   };
   
-  
-  // Filtra o array por empreendimento
-  const filter_by_empreendimento = (rows, empreendimento) => {
-    if (empreendimento === 'BE GARDEN') return rows.filter(row => row.empreendimento === 'BE GARDEN KAÁ SQUARE');
-    if (empreendimento !== 'TOTAL') return rows.filter(row => row.empreendimento === empreendimento);
-    return rows;
-  };
 
   function prepare_data(data) {
-    const rankingsByEmpreendimento = {};
-    const totalRanking = {};
   
+    const totalRanking = {};
+    
     data.forEach(row => {
       const corretor = processar_nome(row.corretor);
-      const empreendimento = row.empreendimento;
-  
-      // Ranking por empreendimento
-      if (!rankingsByEmpreendimento[empreendimento]) {
-        rankingsByEmpreendimento[empreendimento] = {};
-      }
-  
-      if (!rankingsByEmpreendimento[empreendimento][corretor]) {
-        rankingsByEmpreendimento[empreendimento][corretor] = { valor_contrato: 0 };
-      }
-      rankingsByEmpreendimento[empreendimento][corretor].valor_contrato += parseFloat(row.valor_contrato);
-  
+    
       // Ranking total
       if (!totalRanking[corretor]) {
         totalRanking[corretor] = { valor_contrato: 0 };
       }
       totalRanking[corretor].valor_contrato += parseFloat(row.valor_contrato);
     });
-  
-    // Ordenar rankings
-    const sortedRankings = {};
-    Object.keys(rankingsByEmpreendimento).forEach(emp => {
-      sortedRankings[emp] = sortRankings(rankingsByEmpreendimento[emp]);
-    });
     
-    // Ranking total
-    sortedRankings['TOTAL'] = sortRankings(totalRanking);
-  
-    return sortedRankings;
+    // Ordenar ranking
+    const sortedRanking = sortRankings(totalRanking);
+    
+    return sortedRanking;
   }
   
   function sortRankings(ranking) {
@@ -108,17 +83,13 @@ const processar_nome = (nome) => {
       }))
       .sort((a, b) => b.valor_contrato - a.valor_contrato);
   }
-  
-  
-  
-
+    
   
   module.exports = {
     process_data,
     calcular_total_vendas,
     normalizar_nome,
     diminuir_nome,
-    filter_by_empreendimento,
     prepare_data
   };
   
