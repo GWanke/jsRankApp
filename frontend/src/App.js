@@ -22,7 +22,7 @@ function App() {
   const totalValue = currentRanking ? currentRanking.reduce((acc, item) => acc + item.valor_contrato, 0) : 0;
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/fetchData')
+    axios.get('https://ranking.serbravo.com.br/api/fetchData')
       .then(response => {
         setStatus('Fazendo tratamento de dados...');
         setPreparedDataCorretores(response.data.data);
