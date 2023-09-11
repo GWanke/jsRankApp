@@ -6,7 +6,8 @@ const PORT = 3001;
 // Importando as funções do tratamento.js
 const { 
   process_data,  
-  prepare_data 
+  prepare_data,
+  prepare_data_by_imobiliaria
 } = require('./utilidades/tratamento');
 
 require('dotenv').config();
@@ -32,11 +33,13 @@ app.get('/api/fetchData', async (req, res) => {
         // Processando os dados recebidos com Axios
         const processedData = process_data(response.data);
         // Filtragem por data_venda
-        const dataLimite = new Date("2023-08-10");
+        const dataLimite = new Date("2023-01-01");
         const data_filtrada = processedData.filter(row => row.data_venda > dataLimite);
-        const preparedData = prepare_data(data_filtrada)
+        const preparedDataCorretores = prepare_data(data_filtrada)
+        const preparedDataImobiliarias = prepare_data_by_imobiliaria(data_filtrada);
                 res.json({ 
-          data: preparedData 
+          data: preparedDataCorretores,
+          data_imobiliarias: preparedDataImobiliarias
         });
     } else {
       res.status(response.status).json({ message: 'Algo deu errado' });

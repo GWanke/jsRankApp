@@ -68,12 +68,6 @@
   margin-left: 0.3em;
 }
 
-/* Ajustes para o eixo Y no componente */
-
-.y-axis .tick text {
-  font-size: calc(0.9vw + 1vh);
-  font-family: 'Prompt-Regular';
-}
 
 
 .chart-container {
@@ -82,6 +76,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Ajustes para o eixo Y no componente */
+
+.y-axis .tick text {
+  font-size: calc(0.9vw + 1vh);
+  font-family: 'Prompt-Regular';
+}
+
+.y-axis-imob .tick text {
+  font-size: calc(0.8vw + 0.7vh); /* Ajuste o tamanho da fonte conforme necessário */
 }
 
 
@@ -125,6 +130,11 @@
   .y-axis .tick text {
     font-size: calc(2vw + 1vh)
   }
+
+  .y-axis-imob .tick text {
+    font-size: calc(2 + 1vh); /* Ajuste o tamanho da fonte conforme necessário */
+  }
+
   .chart-metas-container{
     width: 80vw;
     padding-left: 0%;
@@ -155,6 +165,9 @@
   }
   .y-axis .tick text {
     font-size: calc(0.9vw + 0.95vh)
+  }
+  .y-axis-imob .tick text {
+    font-size: calc(0.6vw + 0.7vh); /* Ajuste o tamanho da fonte conforme necessário */
   }
   .chart-metas-container{
     width: 77vw;

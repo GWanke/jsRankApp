@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GraficoCorretores from './componentes/GraficoCorretores';
 import GraficoMetas from './componentes/GraficoMetas'
+import GraficoImob from './componentes/GraficoImob'
 import './index.css';
 import './App.css';
 import axios from 'axios';
@@ -10,7 +11,8 @@ const cores = { "Principal": "#007c83", "Secundária": "#9c9fae" };
 
 
 function App() {
-  const [preparedData, setPreparedData] = useState(null);
+  const [preparedDataCorretores, setPreparedDataCorretores] = useState(null);
+  const [preparedDataImobiliaria, setPreparedDataImobiliaria] = useState(null);
   const [status, setStatus] = useState('Comunicando com a API...');
   const [currentRanking, setCurrentRanking] = useState(null);
   const [bestSeller, setBestSeller] = useState("");
@@ -23,7 +25,8 @@ function App() {
     axios.get('http://localhost:3001/api/fetchData')
       .then(response => {
         setStatus('Fazendo tratamento de dados...');
-        setPreparedData(response.data.data);
+        setPreparedDataCorretores(response.data.data);
+        setPreparedDataImobiliaria(response.data.data_imobiliarias);
       })
       .catch(error => {
         console.error("Erro ao buscar dados:", error);
@@ -35,20 +38,19 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (preparedData) {
-      console.log(preparedData.slice(0,10))
-      const filteredData = preparedData.filter(d => d.corretor !== 'Evandro Rodrigues Da Silva' && d.corretor !== 'Lais Saraiva');
+    if (preparedDataCorretores) {
+      const filteredData = preparedDataCorretores.filter(d => d.corretor !== 'Evandro Rodrigues Da Silva' && d.corretor !== 'Lais Saraiva');
       setCurrentRanking(filteredData);
       setBestSeller(filteredData[0].corretor);
       setShowRanking(true);
     }
-  }, [preparedData]);
+  }, [preparedDataCorretores]);
 
   return (
     <div className="App">
       <h1 className="app-titulo">Best Seller</h1>
       
-      {!preparedData && <div className="mensagem-status">{status}</div>}
+      {!preparedDataCorretores && <div className="mensagem-status">{status}</div>}
       
       {showRanking && (
         <>
@@ -67,6 +69,16 @@ function App() {
               />
             </div>
           </section>
+
+          <section className="imob-section">
+            <h2 className="section-title">Ranking de Imobiliárias </h2>
+            <div className="chart-container">
+              <GraficoImob 
+                ranking={preparedDataImobiliaria} 
+                cores={cores} 
+              />
+            </div>
+          </section>
   
           <section className="metas-section">
             <h2 className="section-title">Metas Alcançadas</h2>
@@ -74,6 +86,7 @@ function App() {
               <GraficoMetas total = {totalValue} />
             </div>
           </section>
+
         </>
       )}
     </div>

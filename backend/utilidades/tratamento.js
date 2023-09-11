@@ -70,26 +70,43 @@ const processar_nome = (nome) => {
     });
     
     // Ordenar ranking
-    const sortedRanking = sortRankings(totalRanking);
+    const sortedRanking = sortRankings(totalRanking, 'corretor');
     
     return sortedRanking;
   }
   
-  function sortRankings(ranking) {
+  function sortRankings(ranking, propertyName) {
     return Object.keys(ranking)
-      .map(corretor => ({
-        corretor,
-        valor_contrato: ranking[corretor].valor_contrato,
+      .map(key => ({
+        [propertyName]: key,
+        valor_contrato: ranking[key].valor_contrato,
       }))
       .sort((a, b) => b.valor_contrato - a.valor_contrato);
-  }
+}
+
+
+  function prepare_data_by_imobiliaria(data) {
+    const totalRankingImobiliaria = {};
+
+    data.forEach(row => {
+        const imobiliaria = row.imobiliaria;
+
+        if (!totalRankingImobiliaria[imobiliaria]) {
+            totalRankingImobiliaria[imobiliaria] = { valor_contrato: 0 };
+        }
+        totalRankingImobiliaria[imobiliaria].valor_contrato += parseFloat(row.valor_contrato);
+    });
+
+    const sortedRankingImobiliaria = sortRankings(totalRankingImobiliaria, 'imobiliaria');
+    return sortedRankingImobiliaria;
+}
+
     
   
   module.exports = {
     process_data,
     calcular_total_vendas,
-    normalizar_nome,
-    diminuir_nome,
-    prepare_data
+    prepare_data,
+    prepare_data_by_imobiliaria
   };
   
