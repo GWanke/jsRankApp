@@ -35,7 +35,7 @@ const process_data = (data) => {
   };
   
   // Diminui o nome para um comprimento máximo, abreviando os nomes do meio
-  const diminuir_nome = (nome, max_length = 35) => {
+  const diminuir_nome = (nome, max_length = 30) => {
     if (nome.length <= max_length) return nome;
   
     const parts = nome.split(' ');

@@ -32,7 +32,7 @@ app.get('/api/fetchData', async (req, res) => {
         // Processando os dados recebidos com Axios
         const processedData = process_data(response.data);
         // Filtragem por data_venda
-        const dataLimite = new Date("2023-01-01");
+        const dataLimite = new Date("2023-08-10");
         const data_filtrada = processedData.filter(row => row.data_venda > dataLimite);
         const preparedData = prepare_data(data_filtrada)
                 res.json({ 

@@ -1,84 +1,80 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
-const calculateMargins = (windowWidth) => {
-  if (windowWidth <= 480) { // Dispositivos móveis
-    return { top: 10, right: 10, bottom: 15, left: 75 };
-  } else if (windowWidth <= 768) { // Tablets
-    return { top: 15, right: 15, bottom: 20, left: 75 };
-  } else { // Desktop
-    return { top: 20, right: 20, bottom: 30, left: 75 };
-  }
-};
-
-const calculateMetaPositions = (windowWidth, width) => {
-  const proportion = width / 600; // considerando 960 como a largura máxima
-  return {
-    meta1: 30000000 * proportion,
-    meta2: 60000000 * proportion
-  };
-};
-
 const GraficoMetas = ({ total }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    d3.select("#graficoMetas").selectAll("*").remove();
-
-    const margin = calculateMargins(windowWidth);
-    const width = Math.min(windowWidth, 960) - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
-
-    const svg = d3.select("#graficoMetas")
-                  .append("svg")
-                  .attr("width", width + margin.left + margin.right)
-                  .attr("height", height + margin.top + margin.bottom)
-                  .append("g")
-                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    const x = d3.scaleLinear().domain([0, Math.max(total, 60000000)]).range([0, width]);
-
-    let barColor;
-    if (total < 30000000) {
-      barColor = "#DAA520";
-    } else if (total >= 30000000 && total < 60000000) {
-      barColor = "#9c9fae";
-    } else {
-      barColor = "#007c83";
-    }
-
-    svg.append("rect")
-      .attr("y", (height - 120) / 2)
-      .attr("height", 120)
-      .attr("x", 0)
-      .attr("width", x(total))
-      .attr("fill", barColor);
-
-    const metaPositions = calculateMetaPositions(windowWidth, width);
-
-    svg.append("line")
-       .attr("x1", x(metaPositions.meta1))
-       .attr("x2", x(metaPositions.meta1))
-       .attr("y1", 0)
-       .attr("y2", height)
-       .attr("stroke", "#9c9fae");
-
-    svg.append("line")
-       .attr("x1", x(metaPositions.meta2))
-       .attr("x2", x(metaPositions.meta2))
-       .attr("y1", 0)
-       .attr("y2", height)
-       .attr("stroke", "#007c83");
+    const svgRef = useRef(null);
     
-  }, [total, windowWidth]);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  return <div id="graficoMetas"></div>;
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        const svg = d3.select(svgRef.current);
+        svg.selectAll("*").remove();
+
+        const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+        const width = svg.node().getBoundingClientRect().width - margin.left - margin.right;
+        const height = 300 - margin.top - margin.bottom;
+
+        const x = d3.scaleLinear().domain([0, 75000000]).range([0, width]);
+
+        let barColor;
+        if (total < 30000000) {
+            barColor = "RED";
+        } else if (total >= 30000000 && total < 60000000) {
+            barColor = "#9c9fae";
+        } else {
+            barColor = "#007c83";
+        }
+
+        const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+        g.append("rect")
+            .attr("y", (height - 120) / 2)
+            .attr("height", 120)
+            .attr("x", 0)
+            .attr("width", x(total))
+            .attr("fill", barColor);
+
+            const drawMetaLine = (value, color, label) => {
+              const xOffset = windowWidth < 480 ? 10 : 5; // Ajusta o deslocamento das labels para dispositivos móveis
+              const labelOffset = windowWidth < 480 ? 15 : 10; // Ajusta o deslocamento das labels para dispositivos móveis
+          
+              g.append("line")
+                  .attr("x1", x(value) + xOffset)
+                  .attr("x2", x(value) + xOffset)
+                  .attr("y1", 0)
+                  .attr("y2", height)
+                  .attr("stroke", color)
+                  .attr("stroke-dasharray", "5,5");
+          
+              g.append("text")
+                  .attr("x", x(value) + labelOffset)
+                  .attr("y", 20)
+                  .attr("fill", color)
+                  .text(label);
+          };
+
+        drawMetaLine(30000000, "#9c9fae", "30 milhões");
+        drawMetaLine(60000000, "#007c83", "60 milhões");
+
+    }, [total, windowWidth]);
+
+    return (
+        <div className="chart-metas-container">
+            <svg ref={svgRef} width="100%" height="300px"></svg>
+        </div>
+    );
 };
 
 export default GraficoMetas;

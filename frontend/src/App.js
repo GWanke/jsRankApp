@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import GraficoCorretores from './componentes/GraficoCorretores';
+import GraficoMetas from './componentes/GraficoMetas'
 import './index.css';
 import './App.css';
 import axios from 'axios';
+
 
 const cores = { "Principal": "#007c83", "Secundária": "#9c9fae" };
 
@@ -16,8 +18,6 @@ function App() {
 
 
   const totalValue = currentRanking ? currentRanking.reduce((acc, item) => acc + item.valor_contrato, 0) : 0;
-  const percentage30M = ((totalValue / 30000000) * 100).toFixed(2);
-  const percentage60M = ((totalValue / 60000000) * 100).toFixed(2);
 
   useEffect(() => {
     axios.get('http://localhost:3001/api/fetchData')
@@ -71,8 +71,7 @@ function App() {
           <section className="metas-section">
             <h2 className="section-title">Metas Alcançadas</h2>
             <div className="chart-metas-container">
-              <p >Estamos em {percentage30M}% em relação à métrica de 30 milhões.</p>
-              <p >Estamos em {percentage60M}% em relação à métrica de 60 milhões.</p>
+              <GraficoMetas total = {totalValue} />
             </div>
           </section>
         </>

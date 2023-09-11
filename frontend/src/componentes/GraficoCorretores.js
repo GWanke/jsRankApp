@@ -7,9 +7,9 @@ const calculateMargins = (windowWidth) => {
   if (windowWidth <= 480) { // Dispositivos móveis
     return { top: 10, right: 5, bottom: 30, left: 250 };
   } else if (windowWidth <= 768) { // Tablets
-    return { top: 15, right: 15, bottom: 20, left: 275 };
+    return { top: 15, right: 15, bottom: 20, left: 425 };
   } else { // Desktop
-    return { top: 20, right: 20, bottom: 30, left: 500 };
+    return { top: 20, right: 5, bottom: 30, left: 500 };
   }
 };
 

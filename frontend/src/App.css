@@ -17,9 +17,9 @@
   padding: 5vw;
   background-image: 
     url('/src/imagens/be-monocromia-cinza.png'),
-    linear-gradient(to right, #007c83 0%, #007c83 15%, #f4f4f4 2%, #f4f4f4 100%);
+    linear-gradient(to right, #007c83 0%, #007c83 10%, #f4f4f4 2%, #f4f4f4 100%);
   background-position: left top, left top;
-  background-size: 14% auto, 100% 100%;
+  background-size: 9% auto, 100% 100%;
   background-repeat: no-repeat, no-repeat;
   background-attachment: fixed, fixed;
   width: 100%;
@@ -54,9 +54,8 @@
   text-align: center;
   flex-wrap: wrap; /* Permite que os itens sejam quebrados em várias linhas se necessário */
   font-size: calc(1.75vw + 1vh);
-  color: #444;
   margin-top: 2vh;
-  
+  margin-left: 3vh;
 }
 
 .best-seller-be {
@@ -69,37 +68,40 @@
   margin-left: 0.3em;
 }
 
+/* Ajustes para o eixo Y no componente */
+
+.y-axis .tick text {
+  font-size: calc(0.9vw + 1vh);
+  font-family: 'Prompt-Regular';
+}
+
+
 .chart-container {
-  width: 95vw; /* ocupa 90% da largura da viewport */
+  width: 90vw; /* ocupa 90% da largura da viewport */
   margin: 20px auto; /* adiciona margem e centraliza horizontalmente */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+
+#graficoMetas {
+  background-color: black;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .chart-metas-container {
-  width: 85vw; /* ocupa 85% da largura da viewport */
   display: flex;
-  margin: 2vh auto; /* adiciona margem e centraliza horizontalmente */
-  flex-direction: column; /* alinha os itens na vertical */
   justify-content: center;
   align-items: center;
-  color: #007c83;
+  padding-left: 2%;
+  width: 90vw;
+  height: 300px;
 }
 
-.chart-metas-container p {
-  margin: 1vh 0; /* adiciona uma margem vertical entre as frases */
-  font-size: calc(1.25vw + 1vh); /* ajusta o tamanho da fonte */
-  margin-left: 10vw;
-  text-align: center; /* centraliza o texto */
-}
-
-
-/* Ajustes para o eixo Y no componente */
-
-.y-axis .tick text {
-  font-size: calc(0.95vw + 1vh);
-  font-family: 'Prompt-Regular';
+.chart-metas-container svg text {
+  font-size: calc(0.5vw + 0.9vh); /* Reduz o tamanho da fonte das metas */
 }
 
 
@@ -114,14 +116,18 @@
     font-size: calc(5vw + 3vh);
   }
 
-  .best-seller-container h2 {
+  .best-seller-container{
     font-size: 3.5vw;
   }
   .chart-container {
-    width: 80vw; /* ocupa 80% da largura da viewport em telas médias */
+    width: 85vw; /* ocupa 85% da largura da viewport em telas médias */
   }
   .y-axis .tick text {
-    font-size: calc(1.15vw + 1vh)
+    font-size: calc(2vw + 1vh)
+  }
+  .chart-metas-container{
+    width: 80vw;
+    padding-left: 0%;
   }
 }
 
@@ -136,14 +142,23 @@
   }
 
 
-  .best-seller-container h2 {
-    font-size: 4vw;
+  .best-seller-container{
+    font-size: calc(1.7vw + 1vh);
   }
+
+  .best-seller-name {
+    margin-left: 0.3em;
+  }
+
   .chart-container {
     width: 70vw; /* ocupa 70% da largura da viewport em telas grandes */
   }
   .y-axis .tick text {
-    font-size: calc(1vw + 0.95vh)
+    font-size: calc(0.9vw + 0.95vh)
+  }
+  .chart-metas-container{
+    width: 77vw;
+    padding-left: 0%;
   }
 }
 
